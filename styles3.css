@@ -1,0 +1,65 @@
+body {
+  background-color: #a8d672; /* index3.html & eraser.htmlの背景色 */
+}
+
+.main {
+  background-color: #fff200; /* メインコンテンツエリアの背景色 */
+  min-height: calc(100vh - 80px); /* トップバーの高さを引く */
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex; /* 中央寄せのため */
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.subtitle {
+  background: white;
+  display: inline-block;
+  padding: 0.4em 1em;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.genres {
+  display: flex;
+  justify-content: center; /* 中央揃え */
+  align-items: flex-start;
+  gap: 30px; /* 画像同士の間隔 */
+  flex-wrap: wrap; /* 小画面で折り返し可能 */
+  margin-top: 2rem;
+}
+
+.genre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  padding: 15px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.genre:hover {
+  transform: translateY(-5px);
+  box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+}
+
+.genre-icon {
+  width: 100px; /* 画像サイズを調整 */
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.genre span {
+  color: black;
+  text-shadow: 1px 1px 0 white;
+}
