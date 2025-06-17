@@ -1,0 +1,124 @@
+body {
+  background-color: #f95f5f; /* plot.html & chat.htmlの背景色 */
+}
+
+.top-bar {
+  background-color: #f95f5f; /* チャット画面のトップバー背景色 */
+}
+
+.chat-box {
+  background-color: #f95f5f;
+  height: calc(100vh - 100px); /* トップバーと入力エリアを考慮 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px; /* チャットボックスの最大幅 */
+  margin: 0 auto; /* 中央寄せ */
+  border: 2px solid black;
+  border-top: none;
+  box-sizing: border-box;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: white; /* メッセージ背景 */
+}
+
+.message {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 15px;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.ai {
+  justify-content: flex-start;
+}
+
+.message.user img,
+.message.ai img {
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
+  border-radius: 50%; /* プロフィール画像は丸く */
+  border: 1px solid #ccc;
+}
+
+.bubble {
+  max-width: 60%;
+  padding: 10px 15px;
+  border: 2px solid black;
+  background-color: white;
+  position: relative;
+  font-weight: bold;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.message.user .bubble {
+  border-radius: 15px 15px 0 15px;
+  margin-left: 10px;
+  background-color: #dcf8c6; /* ユーザーの吹き出し色 */
+}
+
+.message.ai .bubble {
+  border-radius: 15px 15px 15px 0;
+  margin-right: 10px;
+  background-color: #f1f0f0; /* AIの吹き出し色 */
+}
+
+/* 吹き出しの先端 */
+.message.ai .bubble::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 10px;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-right: 15px solid #f1f0f0;
+}
+
+.message.user .bubble::before {
+  content: '';
+  position: absolute;
+  right: -15px;
+  top: 10px;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-left: 15px solid #dcf8c6;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  background-color: #a8d672; /* 入力エリアの背景色 */
+  padding: 10px;
+  border-top: 3px solid black;
+}
+
+.input-container input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid black; /* 入力フィールドの枠線 */
+  outline: none;
+  border-radius: 5px;
+}
+
+.send-icon {
+  width: 40px;
+  height: auto;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.send-icon:hover {
+  transform: translateX(5px);
+}
