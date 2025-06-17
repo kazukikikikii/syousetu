@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小説を作ろう</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- メニューアイコンとポップアップメニュー -->
+  <div class="menu-wrapper">
+    <div class="menu-icon" id="menuButton">☰</div>
+    <ul class="main-nav" id="menuNav">
+      <li><a href="homegamen.html">ホーム</a></li>
+      <li><a href="keiziban.html">掲示板</a></li>
+      <li><a href="avatarset.html">アバター</a></li>
+      <li><a href="osirase.html">お知らせ</a></li>
+      <li><a href="settei.html">設定</a></li>
+      <li><a href="index.html">ログアウト</a></li>
+    </ul>
+  </div>
+
+  <div class="cloud">
+    <h1>小説を作ろう</h1>
+  </div>
+  <button class="start-button" onclick="location.href='index2.html'">スタート</button>
+
+  <!-- キャラクター＆吹き出し -->
+  <div class="character-area" id="characterContainer">
+    <img src="character.png" alt="キャラクター" class="character-img" />
+    <div class="speech" id="speech">
+      <span id="speechText"></span>
+      <button id="closeSpeech" class="close-btn">✕</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
