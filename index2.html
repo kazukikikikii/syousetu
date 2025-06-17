@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小説モード選択</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+  <!-- メニューアイコンとポップアップメニュー -->
+  <div class="menu-wrapper">
+    <div class="menu-icon" id="menuButton">☰</div>
+    <ul class="main-nav" id="menuNav">
+      <li><a href="homegamen.html">ホーム</a></li>
+      <li><a href="keiziban.html">掲示板</a></li>
+      <li><a href="avatarset.html">アバター</a></li>
+      <li><a href="osirase.html">お知らせ</a></li>
+      <li><a href="settei.html">設定</a></li>
+      <li><a href="index.html">ログアウト</a></li>
+    </ul>
+  </div>
+
+  <h1 class="title">小説を作ってみよう！</h1>
+
+  <div class="modes">
+    <div class="mode" id="ideaBtn">
+      <img src="idea.png" alt="アイデアモード">
+      <div class="label">アイデアモード</div>
+    </div>
+    <div class="mode" id="eraserBtn">
+      <img src="eraser.png" alt="てなおしモード">
+      <div class="label">てなおしモード</div>
+    </div>
+  </div>
+
+  <div class="center-block" id="blockBtn">
+    <img src="blocks.png" alt="プロット作成" class="blocks">
+    <div class="center-label">プロット作成</div>
+  </div>
+
+  <button class="write-button" onclick="location.href='novel_editor.html'">
+    <img src="pencil.png" alt="鉛筆">
+    <span>小説を書く</span>
+  </button>
+
+  <!-- キャラクター＆吹き出し -->
+  <div class="character-area" id="characterContainer">
+    <img src="character.png" alt="キャラクター" class="character-img" />
+    <div class="speech" id="speech">
+      <span id="speechText"></span>
+      <button id="closeSpeech" class="close-btn">✕</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
