@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アイデア帳</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="notebook_styles.css">
+</head>
+<body>
+  <div class="top-bar">
+    <img src="back.png" class="back-icon" onclick="history.back()" alt="戻る" />
+    <div class="title">アイデア帳</div>
+    <!-- メニューアイコンとポップアップメニュー -->
+    <div class="menu-wrapper">
+      <div class="menu-icon" id="menuButton">☰</div>
+      <ul class="main-nav" id="menuNav">
+        <li><a href="homegamen.html">ホーム</a></li>
+        <li><a href="keiziban.html">掲示板</a></li>
+        <li><a href="avatarset.html">アバター</a></li>
+        <li><a href="osirase.html">お知らせ</a></li>
+        <li><a href="settei.html">設定</a></li>
+        <li><a href="index.html">ログアウト</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="notebook-container">
+    <div class="search-section">
+      <input type="text" id="searchInput" placeholder="検索キーワードを入力">
+      <button id="searchButton">検索</button>
+    </div>
+    <div class="ideas-list" id="ideasList">
+      <!-- アイデア項目がここに動的に追加される -->
+      <div class="idea-item">
+        <div class="idea-header">
+          <span class="idea-title">走る：言い換え</span>
+          <button class="delete-btn">削除</button>
+        </div>
+        <div class="idea-content">
+          <ul>
+            <li>駆ける</li>
+            <li>疾走する</li>
+            <li>風を切って進む</li>
+            <li>稲妻のように走る</li>
+          </ul>
+        </div>
+      </div>
+      <!-- 他のアイデア項目も同様に続く -->
+      <div class="idea-item">
+        <div class="idea-header">
+          <span class="idea-title">SF小説のプロットアイデア</span>
+          <button class="delete-btn">削除</button>
+        </div>
+        <div class="idea-content">
+          <p>滅びゆく地球を脱出し、新たな惑星を目指す人類のサバイバル。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- キャラクター＆吹き出し -->
+  <div class="character-area" id="characterContainer">
+    <img src="character.png" alt="キャラクター" class="character-img" />
+    <div class="speech" id="speech">
+      <span id="speechText"></span>
+      <button id="closeSpeech" class="close-btn">✕</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+      const searchButton = document.getElementById('searchButton');
+      const ideasList = document.getElementById('ideasList');
+
+      // 検索機能のシミュレーション
+      searchButton.addEventListener('click', () => {
+        const query = searchInput.value.toLowerCase();
+        const items = ideasList.getElementsByClassName('idea-item');
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          const textContent = item.textContent.toLowerCase();
+          if (textContent.includes(query)) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        }
+      });
+
+      // 削除ボタン機能
+      ideasList.addEventListener('click', (event) => {
+        if (event.target.classList.contains('delete-btn')) {
+          const itemToDelete = event.target.closest('.idea-item');
+          if (confirm('このアイデアを削除してもよろしいですか？')) { // 確認ダイアログの代わりにカスタムモーダルを推奨
+            itemToDelete.remove();
+            // ここにFirestoreなどを使った削除処理を実装
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
