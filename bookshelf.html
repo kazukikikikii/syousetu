@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本棚</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="bookshelf_styles.css">
+</head>
+<body>
+  <div class="top-bar">
+    <img src="back.png" class="back-icon" onclick="history.back()" alt="戻る" />
+    <div class="title">本棚</div>
+    <!-- メニューアイコンとポップアップメニュー -->
+    <div class="menu-wrapper">
+      <div class="menu-icon" id="menuButton">☰</div>
+      <ul class="main-nav" id="menuNav">
+        <li><a href="homegamen.html">ホーム</a></li>
+        <li><a href="keiziban.html">掲示板</a></li>
+        <li><a href="avatarset.html">アバター</a></li>
+        <li><a href="osirase.html">お知らせ</a></li>
+        <li><a href="settei.html">設定</a></li>
+        <li><a href="index.html">ログアウト</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bookshelf-container">
+    <div class="book-list">
+      <!-- 本の項目がここに動的に追加される -->
+      <div class="book-item">
+        <div class="book-cover">
+          <span class="book-title">小説タイトル１</span>
+        </div>
+        <button class="read-btn">読む</button>
+        <button class="edit-btn">編集</button>
+      </div>
+      <div class="book-item">
+        <div class="book-cover">
+          <span class="book-title">SF大冒険</span>
+        </div>
+        <button class="read-btn">読む</button>
+        <button class="edit-btn">編集</button>
+      </div>
+      <div class="book-item">
+        <div class="book-cover">
+          <span class="book-title">秘密の恋</span>
+        </div>
+        <button class="read-btn">読む</button>
+        <button class="edit-btn">編集</button>
+      </div>
+      <div class="book-item">
+        <div class="book-cover">
+          <span class="book-title">異世界転生記</span>
+        </div>
+        <button class="read-btn">読む</button>
+        <button class="edit-btn">編集</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- キャラクター＆吹き出し -->
+  <div class="character-area" id="characterContainer">
+    <img src="character.png" alt="キャラクター" class="character-img" />
+    <div class="speech" id="speech">
+      <span id="speechText"></span>
+      <button id="closeSpeech" class="close-btn">✕</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const bookList = document.querySelector('.book-list');
+
+      bookList.addEventListener('click', (event) => {
+        if (event.target.classList.contains('read-btn')) {
+          const title = event.target.closest('.book-item').querySelector('.book-title').textContent;
+          alert(`「${title}」を読んでいます...`);
+          // ここに小説を読む機能の実装
+        } else if (event.target.classList.contains('edit-btn')) {
+          const title = event.target.closest('.book-item').querySelector('.book-title').textContent;
+          alert(`「${title}」を編集します...`);
+          // ここに小説編集画面への遷移や編集機能の実装
+        }
+      });
+    });
+  </script>
+</body>
+</html>
