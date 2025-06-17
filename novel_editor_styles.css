@@ -1,0 +1,132 @@
+body {
+  background-color: #e0f2f7; /* 明るい青 */
+}
+
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+}
+
+.input-section {
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+}
+
+.input-group input[type="text"],
+.input-group textarea {
+  width: calc(100% - 20px); /* パディングを考慮 */
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.input-group textarea {
+  min-height: 300px;
+  resize: vertical; /* 縦方向のみリサイズ可能 */
+}
+
+.word-count {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: -10px; /* テキストエリアに近づける */
+}
+
+.genre-selection {
+  margin-top: 20px;
+}
+
+.genre-selection label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 1.1rem;
+}
+
+.genre-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.genre-btn {
+  padding: 10px 20px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.genre-btn:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+.genre-btn.selected {
+  background-color: #a8d672; /* 選択時の色 */
+  border-color: #4CAF50;
+  color: white;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.action-btn {
+  padding: 15px 30px;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.save-btn {
+  background-color: #ffeb3b; /* 黄色 */
+}
+
+.publish-btn {
+  background-color: #8bd36c; /* 緑 */
+  color: white; /* 白文字 */
+}
+
+.action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+}
+
+.save-btn:hover {
+  background-color: #ffe082;
+}
+
+.publish-btn:hover {
+  background-color: #6fb05d;
+}
