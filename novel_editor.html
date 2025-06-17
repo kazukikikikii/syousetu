@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小説執筆</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="novel_editor_styles.css">
+</head>
+<body>
+  <div class="top-bar">
+    <img src="back.png" class="back-icon" onclick="history.back()" alt="戻る" />
+    <div class="title">小説を書く</div>
+    <!-- メニューアイコンとポップアップメニュー -->
+    <div class="menu-wrapper">
+      <div class="menu-icon" id="menuButton">☰</div>
+      <ul class="main-nav" id="menuNav">
+        <li><a href="homegamen.html">ホーム</a></li>
+        <li><a href="keiziban.html">掲示板</a></li>
+        <li><a href="avatarset.html">アバター</a></li>
+        <li><a href="osirase.html">お知らせ</a></li>
+        <li><a href="settei.html">設定</a></li>
+        <li><a href="index.html">ログアウト</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="editor-container">
+    <div class="input-section">
+      <div class="input-group">
+        <label for="novelTitle">作品タイトル</label>
+        <input type="text" id="novelTitle" placeholder="ここにタイトルを入力">
+      </div>
+      <div class="input-group">
+        <label for="novelText">本文</label>
+        <textarea id="novelText" placeholder="ここに本文を入力"></textarea>
+      </div>
+      <div class="word-count">文字数: <span id="wordCount">0</span></div>
+      <div class="genre-selection">
+        <label>ジャンル:</label>
+        <div class="genre-buttons">
+          <button class="genre-btn" data-genre="love">恋愛</button>
+          <button class="genre-btn" data-genre="adventure">冒険</button>
+          <button class="genre-btn" data-genre="sf">SF</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="action-btn save-btn">保存</button>
+      <button class="action-btn publish-btn">本にする</button>
+    </div>
+  </div>
+
+  <!-- キャラクター＆吹き出し -->
+  <div class="character-area" id="characterContainer">
+    <img src="character.png" alt="キャラクター" class="character-img" />
+    <div class="speech" id="speech">
+      <span id="speechText"></span>
+      <button id="closeSpeech" class="close-btn">✕</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const novelText = document.getElementById('novelText');
+      const wordCount = document.getElementById('wordCount');
+      const genreButtons = document.querySelectorAll('.genre-btn');
+      const saveBtn = document.querySelector('.save-btn');
+      const publishBtn = document.querySelector('.publish-btn');
+      let selectedGenre = '';
+
+      // 文字数カウント
+      novelText.addEventListener('input', () => {
+        wordCount.textContent = novelText.value.length;
+      });
+
+      // ジャンル選択
+      genreButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          genreButtons.forEach(btn => btn.classList.remove('selected'));
+          button.classList.add('selected');
+          selectedGenre = button.dataset.genre;
+        });
+      });
+
+      // 保存ボタン
+      saveBtn.addEventListener('click', () => {
+        const title = document.getElementById('novelTitle').value;
+        const text = novelText.value;
+        alert(`小説を保存しました！\nタイトル: ${title}\nジャンル: ${selectedGenre}\n本文: ${text.substring(0, 50)}...`);
+        // ここにFirestoreなどを使った保存処理を実装
+      });
+
+      // 本にするボタン
+      publishBtn.addEventListener('click', () => {
+        const title = document.getElementById('novelTitle').value;
+        if (!title || !novelText.value || !selectedGenre) {
+          alert('タイトル、本文、ジャンルをすべて入力してください。');
+          return;
+        }
+        alert(`「${title}」を本にしました！本棚に追加されます。`);
+        // ここに本棚への追加処理や、詳細な出版処理を実装
+      });
+    });
+  </script>
+</body>
+</html>
