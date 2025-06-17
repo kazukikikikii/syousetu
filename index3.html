@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アイデアモード</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles3.css">
+</head>
+<body>
+  <!-- キャラクター＆吹き出し -->
+  <div class="character-area" id="characterContainer">
+    <img src="character.png" alt="キャラクター" class="character-img" />
+    <div class="speech" id="speech">
+      <span id="speechText"></span>
+      <button id="closeSpeech" class="close-btn">✕</button>
+    </div>
+  </div>
+
+  <div class="top-bar">
+    <img src="back.png" class="back-icon" onclick="history.back()" alt="戻る" />
+    <div class="title-box">アイデアモード</div>
+    <!-- メニューアイコンとポップアップメニュー -->
+    <div class="menu-wrapper">
+      <div class="menu-icon" id="menuButton">☰</div>
+      <ul class="main-nav" id="menuNav">
+        <li><a href="homegamen.html">ホーム</a></li>
+        <li><a href="keiziban.html">掲示板</a></li>
+        <li><a href="avatarset.html">アバター</a></li>
+        <li><a href="osirase.html">お知らせ</a></li>
+        <li><a href="settei.html">設定</a></li>
+        <li><a href="index.html">ログアウト</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="subtitle">小説のジャンルをえらんでね</div>
+    <div class="genres">
+      <div class="genre" onclick="location.href='chat.html?mode=idea&genre=love'">
+        <img src="heart.png" alt="恋愛" class="genre-icon">
+        <span>恋愛</span>
+      </div>
+      <div class="genre" onclick="location.href='chat.html?mode=idea&genre=sf'">
+        <img src="flask.png" alt="SF" class="genre-icon">
+        <span>SF</span>
+      </div>
+      <div class="genre" onclick="location.href='chat.html?mode=idea&genre=adventure'">
+        <img src="sword.png" alt="冒険" class="genre-icon">
+        <span>冒険</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
