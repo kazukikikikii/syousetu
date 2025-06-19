@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (mode === 'idea') {
         message = `「${genre || '未設定'}」ジャンルのアイデアが欲しいんだね！どんな文章やテーマについてアイデアが欲しいか教えてね！`;
       } else if (mode === 'eraser') {
-        message = `「${genre || '未設定'}」ジャンルのてなおしだね！推敲したい文章をここに入力してね！`;
+        message = `「${genre || '未設定'}」ジャンルのてなおしだね！てなおしをしたい文章をここに入力してね！`;
       } else {
         message = "チャットでお話しよう！";
       }
