@@ -1,4 +1,54 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Firebase SDKのインポート
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+// Firebase変数をグローバルスコープで定義
+let app;
+let db;
+let auth;
+let userId; // 現在のユーザーID
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // Firebaseの初期化と認証
+  try {
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+    app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+
+    // 認証状態の監視
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        userId = user.uid;
+        console.log("Firebase authenticated. User ID:", userId);
+        // 認証後に本の読み込みを開始
+        if (window.location.pathname.includes("bookshelf.html")) {
+          setupBookshelfRealtimeListener();
+        }
+      } else {
+        // ユーザーが認証されていない場合、匿名認証を試みる
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        if (initialAuthToken) {
+          await signInWithCustomToken(auth, initialAuthToken);
+        } else {
+          await signInAnonymously(auth);
+          userId = auth.currentUser?.uid || crypto.randomUUID(); // 匿名ユーザーIDまたはランダムUUID
+          console.log("Firebase signed in anonymously. User ID:", userId);
+        }
+        // 初回認証後に本の読み込みを開始
+        if (window.location.pathname.includes("bookshelf.html")) {
+          setupBookshelfRealtimeListener();
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error("Firebase初期化または認証中にエラーが発生しました:", error);
+    // UIにエラーメッセージを表示するなどの対応
+  }
+
+
   // ✅ メニューバー展開処理
   const menuBtn = document.getElementById('menuButton');
   const menuNav = document.getElementById('menuNav');
@@ -68,8 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const ideaBtn = document.getElementById('ideaBtn');
   const eraserBtn = document.getElementById('eraserBtn');
   const blockBtn = document.getElementById('blockBtn');
-  // writeBtn は novel_editor.html に直接遷移するように HTML で変更済み
-  // idea_notebook, bookshelf は script.js で直接遷移させない。メニューまたは専用ボタンから遷移させる。
 
   if (ideaBtn) {
     ideaBtn.onclick = () => location.href = 'index3.html';
@@ -132,7 +180,9 @@ async function sendMessage() {
     const aiResponseText = await getSimulatedLLMResponse(text, currentMode, currentGenre);
 
     // 思考中のメッセージを削除し、AIの実際の応答を追加
-    messagesContainer.removeChild(thinkingMessage);
+    if (messagesContainer.contains(thinkingMessage)) {
+      messagesContainer.removeChild(thinkingMessage);
+    }
 
     const aiMessage = document.createElement('div');
     aiMessage.classList.add('message', 'ai');
@@ -189,3 +239,157 @@ async function getSimulatedLLMResponse(prompt, mode, genre) {
     }, 1500); // 1.5秒の遅延をシミュレート
   });
 }
+
+/**
+ * 小説データをFirestoreに保存する関数
+ * @param {string} title 小説のタイトル
+ * @param {string} text 小説の本文
+ * @param {string} genre 小説のジャンル
+ */
+export async function saveNovelToFirestore(title, text, genre) {
+  if (!db || !userId) {
+    console.error("FirestoreまたはユーザーIDが初期化されていません。");
+    return { success: false, message: "Firestoreの準備ができていません。" };
+  }
+
+  if (!title || !text || !genre) {
+    return { success: false, message: "タイトル、本文、ジャンルは必須です。" };
+  }
+
+  try {
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const novelsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/novels`);
+    
+    await addDoc(novelsCollectionRef, {
+      title: title,
+      text: text,
+      genre: genre,
+      createdAt: serverTimestamp() // サーバータイムスタンプで作成日時を記録
+    });
+    console.log("小説が正常に保存されました。");
+    return { success: true, message: "小説を本棚に保存しました！" };
+  } catch (error) {
+    console.error("小説の保存中にエラーが発生しました:", error);
+    return { success: false, message: "小説の保存に失敗しました。" };
+  }
+}
+
+/**
+ * Firestoreから小説データをリアルタイムで読み込み、表示を更新する関数
+ */
+export function setupBookshelfRealtimeListener() {
+  if (!db || !userId) {
+    console.warn("FirestoreまたはユーザーIDが初期化されていないため、本の読み込みを開始できません。");
+    return;
+  }
+
+  const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+  const novelsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/novels`);
+  
+  // orderByを使用してソートします (Firestoreでインデックスが必要になる場合があります)
+  const q = query(novelsCollectionRef, orderBy('createdAt', 'desc')); 
+
+  onSnapshot(q, (snapshot) => {
+    const bookshelfContainer = document.getElementById('bookList');
+    if (!bookshelfContainer) {
+      console.warn("bookList要素が見つかりません。");
+      return;
+    }
+    bookshelfContainer.innerHTML = ''; // 既存の内容をクリア
+
+    if (snapshot.empty) {
+      bookshelfContainer.innerHTML = '<p class="no-books-message">まだ本棚に小説はありません。小説を書いて「本にする」ボタンを押してみましょう！</p>';
+      return;
+    }
+
+    snapshot.forEach((doc) => {
+      const novel = doc.data();
+      const novelId = doc.id; // ドキュメントIDも取得
+
+      const bookItem = document.createElement('div');
+      bookItem.classList.add('book-item');
+      bookItem.innerHTML = `
+        <div class="book-cover">
+          <span class="book-title">${novel.title || '無題の小説'}</span>
+        </div>
+        <button class="read-btn" data-id="${novelId}">読む</button>
+        <button class="edit-btn" data-id="${novelId}">編集</button>
+      `;
+      bookshelfContainer.appendChild(bookItem);
+    });
+
+    // 各本の「読む」ボタンと「編集」ボタンにイベントリスナーを設定
+    bookshelfContainer.querySelectorAll('.read-btn').forEach(button => {
+      button.addEventListener('click', (event) => {
+        const novelId = event.target.dataset.id;
+        const novelData = snapshot.docs.find(doc => doc.id === novelId)?.data();
+        if (novelData) {
+          displayNovelModal(novelData.title, novelData.text, novelData.genre);
+        }
+      });
+    });
+
+    // 「編集」ボタンはまだ機能を実装していません
+    bookshelfContainer.querySelectorAll('.edit-btn').forEach(button => {
+      button.addEventListener('click', (event) => {
+        const novelId = event.target.dataset.id;
+        // alert(`小説ID: ${novelId} の編集機能はまだ準備中です！`);
+        // ここに編集画面への遷移ロジックなどを追加
+        showCustomAlert(`小説ID: ${novelId} の編集機能はまだ準備中です！`);
+      });
+    });
+  }, (error) => {
+    console.error("小説の読み込み中にエラーが発生しました:", error);
+    const bookshelfContainer = document.getElementById('bookList');
+    if (bookshelfContainer) {
+      bookshelfContainer.innerHTML = '<p class="error-message">本の読み込みに失敗しました。ページを再読み込みしてください。</p>';
+    }
+  });
+}
+
+/**
+ * 小説内容を表示するモーダル
+ * @param {string} title - 小説のタイトル
+ * @param {string} text - 小説の本文
+ * @param {string} genre - 小説のジャンル
+ */
+function displayNovelModal(title, text, genre) {
+  const modalHTML = `
+    <div id="novelModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+      <div style="background-color: white; padding: 25px; border-radius: 10px; border: 3px solid black; max-width: 80%; max-height: 80%; overflow-y: auto; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+        <h2 style="margin-top: 0; margin-bottom: 15px; font-size: 1.5rem; text-align: center; border-bottom: 2px solid black; padding-bottom: 10px;">${title} <span style="font-size: 0.9rem; color: #555;">(${genre})</span></h2>
+        <div style="flex: 1; white-space: pre-wrap; font-size: 1rem; line-height: 1.8; padding-right: 10px; overflow-y: auto;">
+          ${text}
+        </div>
+        <button onclick="document.getElementById('novelModal').remove()" style="margin-top: 20px; padding: 10px 20px; background-color: #a7d676; border: 2px solid black; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1rem; align-self: center;">閉じる</button>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+/**
+ * alert()の代わりに使うカスタムアラート表示関数
+ * @param {string} message - 表示するメッセージ
+ */
+function showCustomAlert(message) {
+  const alertModal = document.createElement('div');
+  alertModal.style.cssText = `
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5); display: flex;
+    justify-content: center; align-items: center; z-index: 9999;
+  `;
+  alertModal.innerHTML = `
+    <div style="background-color: white; padding: 30px; border-radius: 10px; border: 2px solid black; text-align: center; font-weight: bold; max-width: 80%; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      <p style="margin-bottom: 20px;">${message}</p>
+      <button onclick="this.parentElement.parentElement.remove()" style="padding: 10px 20px; background-color: #a7d676; border: 2px solid black; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem;">OK</button>
+    </div>
+  `;
+  document.body.appendChild(alertModal);
+}
+
+// グローバルスコープに関数を公開 (HTMLから直接呼び出すため)
+window.saveNovelToFirestore = saveNovelToFirestore;
+window.setupBookshelfRealtimeListener = setupBookshelfRealtimeListener;
+window.displayNovelModal = displayNovelModal; // モーダル関数も公開
+window.showCustomAlert = showCustomAlert; // カスタムアラート関数も公開
