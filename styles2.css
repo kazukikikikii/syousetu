@@ -56,31 +56,31 @@ body {
   width: 100%;
   max-width: 600px; /* 最大幅を設定 */
   cursor: pointer;
-  background-color: white; /* ここを追加して背景を白色にします */
-  border: 2px solid black; /* blocksクラスのborderをここに移す */
-  border-radius: 10px; /* blocksクラスのborder-radiusをここに移す */
-  box-shadow: 4px 4px 0px rgba(0,0,0,0.2); /* blocksクラスのbox-shadowをここに移す */
-  transition: transform 0.2s, box-shadow 0.2s; /* blocksクラスのtransitionをここに移す */
-  display: flex; /* 画像とテキストの配置のため */
-  justify-content: center; /* 中央寄せ */
-  align-items: center; /* 中央寄せ */
-  padding: 20px; /* 内側の余白 */
-  box-sizing: border-box; /* パディングを幅に含める */
+  background-color: white; /* プロット作成背景を白色に設定 */
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.center-block:hover { /* hover効果をcenter-block自体に適用 */
+.center-block:hover {
   transform: translateY(-5px);
   box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
 }
 
 .blocks {
   width: 100%;
-  /* border, border-radius, box-shadow, transitionは.center-blockに移すため削除 */
+  /* .center-blockに移動したため、ここでは特別なスタイルは不要 */
 }
 
 .center-label {
   position: absolute;
-  top: 50%; /* 中央に配置 */
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 1.5rem;
@@ -88,7 +88,7 @@ body {
   color: black;
   text-shadow: 2px 2px 0 white;
   text-align: center;
-  width: 80%; /* テキストが収まるように */
+  width: 80%;
 }
 
 .write-button {
@@ -96,7 +96,7 @@ body {
   align-items: center;
   background: #fcb900;
   border: 2px solid black;
-  padding: 0.5em 1.5em; /* パディングを調整 */
+  padding: 0.5em 1.5em;
   font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
@@ -112,7 +112,7 @@ body {
 }
 
 .write-button img {
-  width: 80px; /* 画像サイズを調整 */
+  width: 80px;
   height: auto;
-  margin-right: 15px; /* テキストとの間隔 */
+  margin-right: 15px;
 }
