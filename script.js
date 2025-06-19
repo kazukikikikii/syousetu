@@ -389,7 +389,9 @@ function showCustomAlert(message) {
 }
 
 // グローバルスコープに関数を公開 (HTMLから直接呼び出すため)
+window.sendMessage = sendMessage; // これを追加しました
+window.getSimulatedLLMResponse = getSimulatedLLMResponse; // これを追加しました
 window.saveNovelToFirestore = saveNovelToFirestore;
 window.setupBookshelfRealtimeListener = setupBookshelfRealtimeListener;
-window.displayNovelModal = displayNovelModal; // モーダル関数も公開
-window.showCustomAlert = showCustomAlert; // カスタムアラート関数も公開
+window.displayNovelModal = displayNovelModal;
+window.showCustomAlert = showCustomAlert;
