@@ -26,36 +26,12 @@
   </div>
 
   <div class="bookshelf-container">
-    <div class="book-list">
-      <!-- 本の項目がここに動的に追加される -->
-      <div class="book-item">
-        <div class="book-cover">
-          <span class="book-title">小説タイトル１</span>
-        </div>
-        <button class="read-btn">読む</button>
-        <button class="edit-btn">編集</button>
-      </div>
-      <div class="book-item">
-        <div class="book-cover">
-          <span class="book-title">SF大冒険</span>
-        </div>
-        <button class="read-btn">読む</button>
-        <button class="edit-btn">編集</button>
-      </div>
-      <div class="book-item">
-        <div class="book-cover">
-          <span class="book-title">秘密の恋</span>
-        </div>
-        <button class="read-btn">読む</button>
-        <button class="edit-btn">編集</button>
-      </div>
-      <div class="book-item">
-        <div class="book-cover">
-          <span class="book-title">異世界転生記</span>
-        </div>
-        <button class="read-btn">読む</button>
-        <button class="edit-btn">編集</button>
-      </div>
+    <div class="user-id-display">
+      現在のユーザーID: <span id="currentUserId">Loading...</span>
+    </div>
+    <div class="book-list" id="bookList">
+      <!-- 本の項目がJavaScriptによってここに動的に追加される -->
+      <p class="loading-message">本を読み込み中...</p>
     </div>
   </div>
 
@@ -68,22 +44,32 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" type="module"></script> <!-- type="module"を追加 -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const bookList = document.querySelector('.book-list');
-
-      bookList.addEventListener('click', (event) => {
-        if (event.target.classList.contains('read-btn')) {
-          const title = event.target.closest('.book-item').querySelector('.book-title').textContent;
-          alert(`「${title}」を読んでいます...`);
-          // ここに小説を読む機能の実装
-        } else if (event.target.classList.contains('edit-btn')) {
-          const title = event.target.closest('.book-item').querySelector('.book-title').textContent;
-          alert(`「${title}」を編集します...`);
-          // ここに小説編集画面への遷移や編集機能の実装
-        }
-      });
+      // Firebase認証後のuserId取得はscript.jsのonAuthStateChangedで行われる
+      // ここでは初回表示用にLoading...を設定し、script.jsで更新されるのを待つ
+      const userIdDisplay = document.getElementById('currentUserId');
+      if (userIdDisplay && typeof auth !== 'undefined' && auth.currentUser) {
+          userIdDisplay.textContent = auth.currentUser.uid;
+      } else if (userIdDisplay) {
+          // script.jsのonAuthStateChangedで設定されるため、待機
+          // または匿名ユーザーIDが設定されたら更新
+          // userId変数がscript.jsでグローバルになっていることを想定
+          if (typeof window.userId !== 'undefined') {
+              userIdDisplay.textContent = window.userId;
+          }
+      }
+      
+      // setupBookshelfRealtimeListenerはscript.jsのonAuthStateChanged内で呼び出される
+      // onAuthStateChangedが未完了の場合に備えて、ここでも呼び出すが、
+      // 実際にはonAuthStateChangedの完了を待つべき挙動。
+      // Firebaseの初期化が完了している場合のみ実行
+      if (typeof window.setupBookshelfRealtimeListener === 'function') {
+        window.setupBookshelfRealtimeListener();
+      } else {
+        console.warn("setupBookshelfRealtimeListener関数がまだ利用できません。Firebaseの初期化を待機します。");
+      }
     });
   </script>
 </body>
