@@ -7,7 +7,7 @@ body {
   font-size: 1.8rem;
   background: white;
   display: inline-block;
-  padding: 0.2em 1em;
+  padding: 0.2em 0.6em; /* ここを 0.3em 0.6em から 0.2em 0.6em に変更しました */
   border: 2px solid black;
   border-radius: 5px;
 }
@@ -74,7 +74,7 @@ body {
 }
 
 .blocks {
-  width: 70%;
+  width: 100%;
   /* .center-blockに移動したため、ここでは特別なスタイルは不要 */
 }
 
