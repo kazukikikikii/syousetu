@@ -4,7 +4,6 @@ body {
 
 .main {
   background-color: #fff200; /* メインコンテンツエリアの背景色 */
-  justify-content: center;
   min-height: calc(100vh - 80px); /* トップバーの高さを引く */
   padding: 2rem;
   box-sizing: border-box;
@@ -32,6 +31,7 @@ body {
   gap: 30px; /* 画像同士の間隔 */
   flex-wrap: wrap; /* 小画面で折り返し可能 */
   margin-top: 2rem;
+  width: 100%; /* これを追加して、親の幅をいっぱいに使うことを明示 */
 }
 
 .genre {
