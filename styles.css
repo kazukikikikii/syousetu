@@ -39,6 +39,9 @@ body {
   font-size: 1.4rem;
   font-weight: bold;
   border-radius: 5px; /* 角丸を追加 */
+  text-align: center; /* ここを追加: タイトル内のテキストを中央寄せにする */
+  flex-grow: 1; /* ここを追加: 利用可能なスペースを埋めるように要素を拡大する */
+  margin: 0 10px; /* ここを追加: 左右のアイコンとの間隔を確保する */
 }
 
 /* 共通メニューのスタイル */
@@ -127,7 +130,6 @@ body {
   margin-bottom: 10px;
   font-size: 1rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  /* white-space: nowrap; */ /* テキストが折り返されない設定を削除 */
   max-width: 250px; /* 吹き出しの最大幅を設定し、長すぎる場合に折り返す */
   width: auto; /* コンテンツに合わせて幅を自動調整 */
   display: flex; /* Flexboxで内容を中央揃え */
