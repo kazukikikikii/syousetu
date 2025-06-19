@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>チャットモード</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles4.css">
+</head>
+<body>
+  <div class="top-bar">
+    <img src="back.png" class="back-icon" onclick="history.back()" alt="戻る" />
+    <div class="title" id="chatTitle"></div> <!-- モードタイトルを動的に設定 -->
+    <!-- メニューアイコンとポップアップメニュー -->
+    <div class="menu-wrapper">
+      <div class="menu-icon" id="menuButton">☰</div>
+      <ul class="main-nav" id="menuNav">
+        <li><a href="homegamen.html">ホーム</a></li>
+        <li><a href="keiziban.html">掲示板</a></li>
+        <li><a href="avatarset.html">アバター</a></li>
+        <li><a href="osirase.html">お知らせ</a></li>
+        <li><a href="settei.html">設定</a></li>
+        <li><a href="index.html">ログアウト</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chat-box">
+    <div class="messages" id="messages"></div>
+    <div class="input-container">
+      <input type="text" id="userInput" placeholder="ここに書いてね">
+      <button onclick="sendMessage()">
+        <img src="hikouki.png" class="send-icon" alt="送信" />
+      </button>
+    </div>
+  </div>
+
+  <!-- キャラクター＆吹き出し -->
+  <div class="character-area" id="characterContainer">
+    <img src="character.png" alt="キャラクター" class="character-img" />
+    <div class="speech" id="speech">
+      <span id="speechText"></span>
+      <button id="closeSpeech" class="close-btn">✕</button>
+    </div>
+  </div>
+
+  <script>
+    // chat.htmlにアクセスした際にURLパラメータからタイトルを設定する
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const mode = urlParams.get('mode');
+      const chatTitle = document.getElementById('chatTitle');
+
+      if (chatTitle) {
+        if (mode === 'idea') {
+          chatTitle.textContent = 'アイデアモード';
+        } else if (mode === 'eraser') {
+          chatTitle.textContent = 'てなおしモード';
+        } else {
+          chatTitle.textContent = 'チャット';
+        }
+      }
+    });
+  </script>
+  <script src="script.js" type="module"></script>
+</body>
+</html>
