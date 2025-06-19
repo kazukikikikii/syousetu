@@ -56,18 +56,26 @@ body {
   width: 100%;
   max-width: 600px; /* 最大幅を設定 */
   cursor: pointer;
+  background-color: white; /* ここを追加して背景を白色にします */
+  border: 2px solid black; /* blocksクラスのborderをここに移す */
+  border-radius: 10px; /* blocksクラスのborder-radiusをここに移す */
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.2); /* blocksクラスのbox-shadowをここに移す */
+  transition: transform 0.2s, box-shadow 0.2s; /* blocksクラスのtransitionをここに移す */
+  display: flex; /* 画像とテキストの配置のため */
+  justify-content: center; /* 中央寄せ */
+  align-items: center; /* 中央寄せ */
+  padding: 20px; /* 内側の余白 */
+  box-sizing: border-box; /* パディングを幅に含める */
+}
+
+.center-block:hover { /* hover効果をcenter-block自体に適用 */
+  transform: translateY(-5px);
+  box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
 }
 
 .blocks {
   width: 100%;
-  border: 2px solid black;
-  border-radius: 10px;
-  box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.center-block:hover .blocks {
-  transform: translateY(-5px);
-  box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+  /* border, border-radius, box-shadow, transitionは.center-blockに移すため削除 */
 }
 
 .center-label {
