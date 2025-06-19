@@ -13,6 +13,18 @@ body {
   box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
 }
 
+.user-id-display {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px dashed #555;
+  background-color: #fff;
+  border-radius: 5px;
+  word-break: break-all; /* 長いIDがはみ出さないように */
+}
+
+
 .book-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* レスポンシブグリッド */
@@ -87,4 +99,17 @@ body {
 
 .edit-btn:hover {
   background-color: #ffe082;
+}
+
+.no-books-message, .loading-message, .error-message {
+  grid-column: 1 / -1; /* グリッド全体に広がる */
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  padding: 20px;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-weight: bold;
 }
