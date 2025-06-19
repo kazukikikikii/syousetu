@@ -48,7 +48,7 @@
 
     <div class="action-buttons">
       <button class="action-btn save-btn">保存</button>
-      <button class="action-btn publish-btn">本にする</button>
+      <button class="action-btn publish-btn" id="publishBtn">本にする</button>
     </div>
   </div>
 
@@ -61,14 +61,14 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" type="module"></script> <!-- type="module"を追加 -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const novelText = document.getElementById('novelText');
       const wordCount = document.getElementById('wordCount');
       const genreButtons = document.querySelectorAll('.genre-btn');
       const saveBtn = document.querySelector('.save-btn');
-      const publishBtn = document.querySelector('.publish-btn');
+      const publishBtn = document.getElementById('publishBtn'); // IDで取得
       let selectedGenre = '';
 
       // 文字数カウント
@@ -85,23 +85,47 @@
         });
       });
 
-      // 保存ボタン
+      // 保存ボタン (現時点ではアラートのみ)
       saveBtn.addEventListener('click', () => {
         const title = document.getElementById('novelTitle').value;
         const text = novelText.value;
-        alert(`小説を保存しました！\nタイトル: ${title}\nジャンル: ${selectedGenre}\n本文: ${text.substring(0, 50)}...`);
-        // ここにFirestoreなどを使った保存処理を実装
+        // alert(`小説を保存しました！\nタイトル: ${title}\nジャンル: ${selectedGenre}\n本文: ${text.substring(0, 50)}...`);
+        window.showCustomAlert(`小説を一時保存しました！\nタイトル: ${title}\nジャンル: ${selectedGenre}`);
       });
 
-      // 本にするボタン
-      publishBtn.addEventListener('click', () => {
-        const title = document.getElementById('novelTitle').value;
-        if (!title || !novelText.value || !selectedGenre) {
-          alert('タイトル、本文、ジャンルをすべて入力してください。');
+      // 「本にする」ボタン
+      publishBtn.addEventListener('click', async () => {
+        const title = document.getElementById('novelTitle').value.trim();
+        const text = novelText.value.trim();
+
+        if (!title) {
+          window.showCustomAlert('作品タイトルを入力してください。');
           return;
         }
-        alert(`「${title}」を本にしました！本棚に追加されます。`);
-        // ここに本棚への追加処理や、詳細な出版処理を実装
+        if (!text) {
+          window.showCustomAlert('本文を入力してください。');
+          return;
+        }
+        if (!selectedGenre) {
+          window.showCustomAlert('ジャンルを選択してください。');
+          return;
+        }
+
+        // 保存処理
+        window.showCustomAlert('小説を本棚に保存しています...'); // ローディング表示の代わり
+        const result = await window.saveNovelToFirestore(title, text, selectedGenre);
+        
+        if (result.success) {
+          window.showCustomAlert(result.message);
+          // 保存成功後、入力フィールドをクリアするなども検討
+          document.getElementById('novelTitle').value = '';
+          novelText.value = '';
+          wordCount.textContent = '0';
+          genreButtons.forEach(btn => btn.classList.remove('selected'));
+          selectedGenre = '';
+        } else {
+          window.showCustomAlert(result.message);
+        }
       });
     });
   </script>
