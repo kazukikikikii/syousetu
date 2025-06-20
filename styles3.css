@@ -31,7 +31,7 @@ body {
   gap: 30px; /* 画像同士の間隔 */
   flex-wrap: wrap; /* 小画面で折り返し可能 */
   margin-top: 2rem;
-  width: 100%; /* これを追加して、親の幅をいっぱいに使うことを明示 */
+  width: 100%; /* 親の幅をいっぱいに使うことを明示 */
 }
 
 .genre {
@@ -63,4 +63,70 @@ body {
 .genre span {
   color: black;
   text-shadow: 1px 1px 0 white;
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* スマートフォン縦表示 (幅 768px 以下) */
+@media (max-width: 768px) {
+  .main {
+    padding: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    padding: 0.3em 0.8em;
+    margin-bottom: 1.5rem;
+  }
+
+  .genres {
+    gap: 20px; /* アイテム間の隙間を減らす */
+    margin-top: 1.5rem;
+  }
+
+  .genre {
+    width: 40%; /* 2列表示にするための幅 */
+    max-width: 150px; /* 最大幅を設定 */
+    padding: 10px;
+  }
+
+  .genre-icon {
+    width: 80px;
+  }
+
+  .genre span {
+    font-size: 1rem;
+  }
+}
+
+/* 小画面向け調整 (幅 480px 以下) */
+@media (max-width: 480px) {
+  .main {
+    padding: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    padding: 0.2em 0.6em;
+    margin-bottom: 1rem;
+  }
+
+  .genres {
+    gap: 15px;
+    margin-top: 1rem;
+  }
+
+  .genre {
+    width: 45%; /* さらに狭い画面で調整 */
+    max-width: 120px;
+    padding: 8px;
+  }
+
+  .genre-icon {
+    width: 60px;
+  }
+
+  .genre span {
+    font-size: 0.9rem;
+  }
 }
