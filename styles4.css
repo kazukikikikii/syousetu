@@ -58,6 +58,7 @@ body {
   position: relative;
   font-weight: bold;
   box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+  word-wrap: break-word; /* 長い単語でも折り返す */
 }
 
 .message.user .bubble {
@@ -121,4 +122,113 @@ body {
 }
 .send-icon:hover {
   transform: translateX(5px);
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* スマートフォン縦表示 (幅 768px 以下) */
+@media (max-width: 768px) {
+  .chat-box {
+    height: calc(100vh - 80px); /* トップバーを考慮して高さを調整 */
+    max-width: 100%; /* 全幅を使用 */
+    border-left: none;
+    border-right: none;
+  }
+
+  .messages {
+    padding: 15px;
+  }
+
+  .message.user img,
+  .message.ai img {
+    width: 35px;
+    height: 35px;
+    margin: 0 8px;
+  }
+
+  .bubble {
+    max-width: 70%; /* 小さい画面では吹き出しの幅を広げる */
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .message.ai .bubble::before {
+    left: -12px;
+    top: 8px;
+    border: 6px solid transparent;
+    border-right: 12px solid #f1f0f0;
+  }
+
+  .message.user .bubble::before {
+    right: -12px;
+    top: 8px;
+    border: 6px solid transparent;
+    border-left: 12px solid #dcf8c6;
+  }
+
+  .input-container {
+    padding: 8px;
+  }
+
+  .input-container input {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .send-icon {
+    width: 35px;
+    margin-left: 8px;
+  }
+}
+
+/* 小画面向け調整 (幅 480px 以下) */
+@media (max-width: 480px) {
+  .chat-box {
+    height: calc(100vh - 70px);
+  }
+
+  .messages {
+    padding: 10px;
+  }
+
+  .message.user img,
+  .message.ai img {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+  }
+
+  .bubble {
+    max-width: 80%; /* さらに幅を広げる */
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  .message.ai .bubble::before {
+    left: -10px;
+    top: 6px;
+    border: 5px solid transparent;
+    border-right: 10px solid #f1f0f0;
+  }
+
+  .message.user .bubble::before {
+    right: -10px;
+    top: 6px;
+    border: 5px solid transparent;
+    border-left: 10px solid #dcf8c6;
+  }
+
+  .input-container {
+    padding: 5px;
+  }
+
+  .input-container input {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  .send-icon {
+    width: 30px;
+    margin-left: 5px;
+  }
 }
