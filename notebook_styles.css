@@ -92,3 +92,91 @@ body {
   margin-left: 20px;
   padding: 0;
 }
+
+/* --- レスポンシブ対応 --- */
+
+/* スマートフォン縦表示 (幅 768px 以下) */
+@media (max-width: 768px) {
+  .notebook-container {
+    width: 95%;
+    padding: 15px;
+    margin: 15px auto;
+  }
+
+  .search-section {
+    flex-direction: column; /* 縦並びにする */
+    gap: 8px;
+  }
+
+  .search-section input,
+  .search-section button {
+    width: 100%; /* 幅を広げる */
+    box-sizing: border-box;
+  }
+
+  .search-section input {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .search-section button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+
+  .ideas-list {
+    gap: 10px;
+  }
+
+  .idea-item {
+    padding: 12px;
+  }
+
+  .idea-title {
+    font-size: 1rem;
+  }
+
+  .delete-btn {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+  }
+
+  .idea-content {
+    font-size: 0.9rem;
+  }
+}
+
+/* 小画面向け調整 (幅 480px 以下) */
+@media (max-width: 480px) {
+  .notebook-container {
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  .search-section {
+    gap: 5px;
+  }
+
+  .search-section input,
+  .search-section button {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  .idea-item {
+    padding: 10px;
+  }
+
+  .idea-title {
+    font-size: 0.9rem;
+  }
+
+  .delete-btn {
+    padding: 3px 6px;
+    font-size: 0.75rem;
+  }
+
+  .idea-content {
+    font-size: 0.85rem;
+  }
+}
