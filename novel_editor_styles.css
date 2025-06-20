@@ -66,7 +66,7 @@ body {
 .genre-buttons {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* 小さい画面で折り返す */
 }
 
 .genre-btn {
@@ -96,6 +96,7 @@ body {
   justify-content: center;
   gap: 20px;
   margin-top: 30px;
+  flex-wrap: wrap; /* 小さい画面で折り返す */
 }
 
 .action-btn {
@@ -129,4 +130,110 @@ body {
 
 .publish-btn:hover {
   background-color: #6fb05d;
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* スマートフォン縦表示 (幅 768px 以下) */
+@media (max-width: 768px) {
+  .editor-container {
+    width: 95%; /* 幅を広げる */
+    padding: 15px;
+    margin: 15px auto;
+  }
+
+  .input-group label {
+    font-size: 1rem;
+  }
+
+  .input-group input[type="text"],
+  .input-group textarea {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .input-group textarea {
+    min-height: 200px; /* 高さを調整 */
+  }
+
+  .word-count {
+    font-size: 0.85rem;
+  }
+
+  .genre-selection label {
+    font-size: 1rem;
+  }
+
+  .genre-buttons {
+    gap: 8px;
+  }
+
+  .genre-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    flex-grow: 1; /* 小さいボタンも伸ばす */
+    text-align: center;
+  }
+
+  .action-buttons {
+    flex-direction: column; /* ボタンを縦並びにする */
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .action-btn {
+    width: 90%; /* 幅を広げる */
+    max-width: 300px; /* 最大幅を設定 */
+    padding: 12px 20px;
+    font-size: 1.1rem;
+  }
+}
+
+/* 小画面向け調整 (幅 480px 以下) */
+@media (max-width: 480px) {
+  .editor-container {
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  .input-group label {
+    font-size: 0.9rem;
+  }
+
+  .input-group input[type="text"],
+  .input-group textarea {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  .input-group textarea {
+    min-height: 150px;
+  }
+
+  .word-count {
+    font-size: 0.8rem;
+  }
+
+  .genre-selection label {
+    font-size: 0.9rem;
+  }
+
+  .genre-buttons {
+    gap: 5px;
+  }
+
+  .genre-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .action-buttons {
+    gap: 8px;
+    margin-top: 15px;
+  }
+
+  .action-btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+  }
 }
