@@ -7,7 +7,7 @@ body {
   font-size: 1.8rem;
   background: white;
   display: inline-block;
-  padding: 0.2em 0.6em; /* ここを 0.3em 0.6em から 0.2em 0.6em に変更しました */
+  padding: 0.2em 0.6em;
   border: 2px solid black;
   border-radius: 5px;
 }
@@ -115,4 +115,105 @@ body {
   width: 80px;
   height: auto;
   margin-right: 15px;
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* スマートフォン縦表示 (幅 768px 以下) */
+@media (max-width: 768px) {
+  .title {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    padding: 0.2em 0.5em;
+  }
+
+  .modes {
+    flex-direction: column; /* 縦並びにする */
+    align-items: center;
+    margin: 30px 5%; /* 左右の余白を減らす */
+    gap: 15px; /* アイテム間の隙間を減らす */
+  }
+
+  .mode {
+    width: 80%; /* 幅を広げる */
+    max-width: 300px; /* 最大幅を設定 */
+    padding: 12px;
+  }
+
+  .mode img {
+    width: 150px;
+  }
+
+  .label {
+    font-size: 1.1rem;
+  }
+
+  .center-block {
+    max-width: 80%; /* 幅を広げる */
+    margin: 30px auto;
+    padding: 15px;
+  }
+
+  .center-label {
+    font-size: 1.3rem;
+  }
+
+  .write-button {
+    font-size: 1.3rem;
+    padding: 0.4em 1em;
+    margin-top: 15px;
+  }
+
+  .write-button img {
+    width: 60px;
+    margin-right: 10px;
+  }
+}
+
+/* 小画面向け調整 (幅 480px 以下) */
+@media (max-width: 480px) {
+  .title {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    padding: 0.15em 0.4em;
+  }
+
+  .modes {
+    margin: 20px 2%;
+    gap: 10px;
+  }
+
+  .mode {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .mode img {
+    width: 120px;
+  }
+
+  .label {
+    font-size: 1rem;
+  }
+
+  .center-block {
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  .center-label {
+    font-size: 1.1rem;
+  }
+
+  .write-button {
+    font-size: 1.1rem;
+    padding: 0.3em 0.8em;
+    margin-top: 10px;
+  }
+
+  .write-button img {
+    width: 50px;
+    margin-right: 8px;
+  }
 }
